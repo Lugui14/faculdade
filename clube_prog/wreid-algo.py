@@ -1,5 +1,4 @@
 i = int(input())
-print(i, end=" ")
 while True:
     if i == 1:
         print(i)
