@@ -6,3 +6,7 @@ for x in range(1, i):
     if x != list[x-1]:
         print(x)
         break
+
+    if list[-1] != i:
+        print(i)
+        break
