@@ -1,4 +1,5 @@
 i = int(input())
+
 while True:
     if i == 1:
         print(i)
