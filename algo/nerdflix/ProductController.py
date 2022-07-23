@@ -5,7 +5,10 @@ def execute(opcao: int) -> None:
     productService = ProductService()
     #Mostrar Lista de produtos
     if opcao == 1:
-        opcaoRelatorio = functions.intinput("\nEscolha uma opção:\n(-1 voltar\n 0- todos,\n1- somente filmes,\n2- somente séries\n3- somente documentários\n4- somente produtos a venda\n5- produtos indisponíveis.) ")
+        opcaoRelatorio = functions.intinput("\nEscolha uma opção:\n-1 voltar\n0- todos,\n1- somente filmes,\n2- somente séries\n3- somente documentários\n4- somente produtos a venda\n5- produtos indisponíveis.\n")
+        if opcaoRelatorio == None:
+            print("\nErro... voltando")
+            return
         #gerando tabela
         functions.tabelaprodutos(productService.getAll(opcaoRelatorio))
         return
@@ -13,7 +16,6 @@ def execute(opcao: int) -> None:
     #Mostra um produto
     elif opcao == 2:
         codigo = input("Digite o codigo do produto que deseja pesquisar: (0- voltar) ")
-        
         #voltar
         if codigo == "0":
             return

@@ -25,7 +25,7 @@ class ProductRepo:
     if preco != None:
       produtos[codigo]['preco'] = preco
     if disponibilidade != None:
-      produtos[codigo]['vendivel'] = disponibilidade
+      produtos[codigo]['disponibilidade'] = disponibilidade
 
     return produtos[codigo]
 
