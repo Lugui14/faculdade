@@ -5,18 +5,9 @@ def execute(opcao: int) -> None:
     productService = ProductService()
     #Mostrar Lista de produtos
     if opcao == 1:
-        #percorrendo todos os produtos
-        for produto in productService.getAll().values():
-            if produto['tipo'] == 1:
-                tipo = 'série'
-            elif produto['tipo'] == 2:
-                tipo = 'filme'
-            else:
-                tipo = 'documentário'
-
-            print("--------")
-            print(f"Nome: {produto['nome']}, Tipo: {tipo}, preço: R${produto['preco']}, Disponibilidade: {produto['disponibilidade']}")
-            print("--------")
+        opcaoRelatorio = functions.intinput("\nEscolha uma opção:\n(-1 voltar\n 0- todos,\n1- somente filmes,\n2- somente séries\n3- somente documentários\n4- somente produtos a venda\n5- produtos indisponíveis.) ")
+        #gerando tabela
+        functions.tabelaprodutos(productService.getAll(opcaoRelatorio))
         return
 
     #Mostra um produto

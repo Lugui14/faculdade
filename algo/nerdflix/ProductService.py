@@ -6,9 +6,44 @@ class ProductService:
         self.repo = ProductRepo
 
     #Pega todos os produtos
-    def getAll(self) -> dict:
-        produtos = self.repo.getAll()
-        return produtos
+    def getAll(self, opcao: int) -> dict or None:
+        if opcao == None:
+            return           
+        if opcao == -1:
+            return
+        if opcao < 0 or opcao > 5:
+            print("Opção invalida.")
+            return
+
+        if opcao == 0:
+            nprodutos = self.repo.getAll()
+        elif opcao == 1:
+            nprodutos = {}
+            for produto in self.repo.getAll().values():
+                if produto['tipo'] == 2:
+                    nprodutos[produto['codigo']] = produto
+        elif opcao == 2:
+            nprodutos = {}
+            for produto in self.repo.getAll().values():
+                if produto['tipo'] == 1:
+                    nprodutos[produto['codigo']] = produto
+        elif opcao == 3:
+            nprodutos = {}
+            for produto in self.repo.getAll().values():
+                if produto['tipo'] == 3:
+                    nprodutos[produto['codigo']] = produto
+        elif opcao == 4:
+            nprodutos = {}
+            for produto in self.repo.getAll().values():
+                if produto['disponibilidade'] == True:
+                    nprodutos[produto['codigo']] = produto
+        elif opcao == 5:
+            nprodutos = {}
+            for produto in self.repo.getAll().values():
+                if produto['disponibilidade'] == False:
+                    nprodutos[produto['codigo']] = produto
+
+        return nprodutos
 
     #Busca um produto
     def getOne(self, codigo: str) -> dict or str:
@@ -65,18 +100,17 @@ class ProductService:
             if preco <= 0:
                 print("\nDigite um preço valido.")
                 return
+            #formatar preco   
+            novoPreco = round(preco, 2)
         if vendivel != None:
             if vendivel != 1 and vendivel != 2:
                 print("\nDigite um valor valido para disponibilidade de venda.")
                 return
-        
-        #formatar preco    
-        novoPreco = round(preco, 2)
-        #formatar disponibilidade
-        if vendivel == 1:
-            dispo = True
-        else:
-            dispo = False
+            #formatar disponibilidade
+            if vendivel == 1:
+                dispo = True
+            else:
+                dispo = False
 
         produto = self.repo.update(codigo, nome, tipo, preco, dispo)
         return produto
