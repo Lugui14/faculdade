@@ -1,120 +1,95 @@
 from ProductService import ProductService
+import functions
 
-class ProductController:
-    #define lista de produtos
-    def __init__(self, produtos: dict):
-        self.produtos = produtos
-        self.productObj = ProductService(produtos)
+def execute(opcao: int) -> None:
+    productService = ProductService()
+    #Mostrar Lista de produtos
+    if opcao == 1:
+        #percorrendo todos os produtos
+        for produto in productService.getAll().values():
+            if produto['tipo'] == 1:
+                tipo = 'série'
+            elif produto['tipo'] == 2:
+                tipo = 'filme'
+            else:
+                tipo = 'documentário'
 
-    #executa controlador
-    def execute(self, opcao: int):
-        if opcao == 1:
-            for produto in self.produtos.values():
-                if produto['tipo'] == 1: 
-                    tipo = "série"
-                elif produto['tipo'] == 2:
-                    tipo = "filme"
-                else:
-                    tipo = "documentário"
+            print("--------")
+            print(f"Nome: {produto['nome']}, Tipo: {tipo}, preço: R${produto['preco']}, Disponibilidade: {produto['disponibilidade']}")
+            print("--------")
+        return
 
-                print("---------------------------------------------------------------------------------------------------------------------")
-                print(f"Codigo: {produto['codigo']} | Nome: {produto['nome']} | Tipo: {tipo} | Preço: R${produto['preco']} | Disponível: {produto['vendivel']}")
-                print("---------------------------------------------------------------------------------------------------------------------")
-
-        #Mostra um produto
-        elif opcao == 2:
-            produto = "Buscar Produto..."
-            while type(produto) == str:
-                print(produto)
-                cod = input("Digite o codigo do produto para buscar: (0- voltar) ")
-                if cod == "0":
-                    return self.produtos
-
-                produto = self.productObj.read(cod)
-            
-            print("Produto:")
-            print(f"Codigo: {produto['codigo']} | Nome: {produto['nome']} | Tipo: {tipo} | Preço: R${produto['preco']} | Disponível: {produto['vendivel']}")
-            
-
-        #cadastra um produto novo
-        elif opcao == 3:
-            resposta = "Cadastro Produto..."
-            while type(resposta) != dict:
-                print(resposta)
-                codigo = input("Digite um código para o produto: (0- voltar) ")
-                if codigo == "0":
-                    return self.produtos
-                nome = input("Digite um nome para o produto: ")
-                tipo = int(input("Digite o tipo do produto: (1- serie, 2- filme, 3- documentário) "))
-                preco = float(input("Digite o preço do produto: "))
-                disponivel = int(input("Está disponível para a venda? (1- sim, 2- não) "))
-                while disponivel != 1 and disponivel != 2:
-                    print("Digite um valor valido!")
-                    disponivel = int(input("Está disponível para a venda? (1- sim, 2- não) "))
-
-                resposta = self.productObj.create(codigo, nome, tipo, preco, disponivel)
-
-            self.produtos = self.productObj.readAll()
-            print(f"Produto novo:\n {resposta}")
+    #Mostra um produto
+    elif opcao == 2:
+        codigo = input("Digite o codigo do produto que deseja pesquisar: (0- voltar) ")
         
-        #Atualizar um produto existente
-        elif opcao == 4:
-            #codigo para alterar
-            while True:
-                cod = input("Digite o codigo do produto que deseja atualizar: (0- voltar) ")
-                if cod not in self.produtos.keys():
-                    print("Produto inexistente.")
-                    continue
-                if cod == "0":
-                    return self.produtos
+        #voltar
+        if codigo == "0":
+            return
 
-            opc = 0
-            val = 0
-            #opção para alterar 1 nome, 2 tipo, 3 preco, 4 vendivel
-            while True:
-                opc = int(input("O que você vai atualizar? (1- Nome, 2- Tipo, 3- Preço, 4- Disponibilidade)"))
-                #alteração
-                if opc == 1:
-                    val = input("Digite um novo nome: ")
-                    break
-                elif opc == 2:
-                    val = int(input("Digite um novo tipo: (1- serie, 2- filme, 3- documentario) "))
-                    break
-                elif opc == 3:
-                    val = float(input("Digite um novo preço: "))
-                    break
-                elif opc == 4:
-                    while True:
-                        semival = int(input("Digite a disponibilidade (1- disponivel, 2- não disponivel) "))
-                        if semival == 1:
-                            val = True
-                            break
-                        elif semival == 2:
-                            val = False
-                            break
-                        else:
-                            print("Digite uma opção valida!")
-                            continue 
-                    break
+        #pega produto
+        produto = productService.getOne(codigo)
+        if produto != None:
+            if produto['tipo'] == 1:
+                tipo = 'série'
+            elif produto['tipo'] == 2:
+                tipo = 'filme'
+            else:
+                tipo = 'documentário'
 
-                else:
-                    print("Digite uma opção valida!")
-                    continue
+        #imprime produto
+            print("Resultado: ")
+            print(f"Nome: {produto['nome']}, Tipo: {tipo}, preço: R${produto['preco']}, Disponibilidade: {produto['disponibilidade']}")
+        return
 
-            produto = self.productObj.update(cod, opc, val)
-            self.produtos = self.productObj.readAll()
-            print(f"Produto atualizado!\n {produto}")
+    #cadastra um produto novo
+    elif opcao == 3:
+        #coletando os dados e tratando-os
+        cod = input("Digite o codigo do produto: (0- voltar) ")
+        if cod == "0":
+            return
+        nome = functions.strinput("Digite um nome para o produto: ")
+        tipo = functions.intinput("Digite o tipo do produto: (1- série, 2-filme, 3-documentário) ")
+        preco = functions.floatinput("Digite o preço do produto: ")
+        disp = functions.intinput("O produto está disponível para venda? (1- disponível, 2- indisponível) ")
 
-        else:
-            while True:
-                cod = input("Digite o codigo do produto a ser deletado: (0- voltar) ")
-                if cod == "0":
-                    return self.produtos
-                
-                if self.productObj.delete(cod) != str:
-                    self.produtos = self.productObj.readALl()
-                    print("Produto Deletado!")
-                    break
+        #adicionando novo produto
+        produto = productService.add(cod, nome, tipo, preco, disp)
 
+        #mostrando novo produto
+        if produto != None:
+            print("\nProduto Cadastrado!")
+            print(f"Nome: {produto['nome']}, Tipo: {produto['tipo']}, preço: R${produto['preco']}, Disponibilidade: {produto['disponibilidade']}")
+        return
+        
+    #Atualizar um produto existente
+    elif opcao == 4:
+        #coletando os dados e tratamento de dados
+        cod = input("Digite o codigo do produto que deseja atualizar: (0- voltar) ")
+        if cod == "0":
+            return
 
-        return self.produtos
+        nome = functions.strinput("Digite um novo nome para o produto: (Clique enter caso não queira alterar nada) ")
+        tipo = functions.intinput("Digite um novo tipo para o produto:\n(1-série, 2-filme, 3-documentário)\n(Clique enter caso não queira alterar nada) ")
+        preco = functions.floatinput("Digite um novo preço para o produto: (Clique enter caso não queira alterar nada) ")
+        disp = functions.intinput("Digite a nova disponibilidade do produto:\n(1- disponível, 2- indisponível)\n(Clique enter caso não queira alterar nada) ")
+
+        #atualizando produto
+        produto = productService.update(cod, nome, tipo, preco, disp)
+
+        #mostrando produto atualizado
+        if produto != None:
+            print("\nProduto Atualizado!")
+            print(f"Nome: {produto['nome']}, Tipo: {produto['tipo']}, preço: R${produto['preco']}, Disponibilidade: {produto['disponibilidade']}")
+        return
+    
+    #Deletar produto
+    else:
+        #pegando codigo apra deletar
+        cod = input("Digite o codigo do produto que deseja excluir: (0- voltar) ")
+        if cod == "0":
+            return
+        #deletando
+        productService.delete(cod)
+        return
+    
