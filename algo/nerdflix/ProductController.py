@@ -5,7 +5,7 @@ def execute(opcao: int) -> None:
     productService = ProductService()
     #Mostrar Lista de produtos
     if opcao == 1:
-        opcaoRelatorio = functions.intinput("\nEscolha uma opção:\n-1 voltar\n0- todos,\n1- somente filmes,\n2- somente séries\n3- somente documentários\n4- somente produtos a venda\n5- produtos indisponíveis.\n")
+        opcaoRelatorio = functions.intinput("\nEscolha uma opção:\n0- todos,\n1- somente filmes,\n2- somente séries\n3- somente documentários\n4- somente produtos a venda\n5- produtos indisponíveis.\n6- voltar\n")
         if opcaoRelatorio == None:
             print("\nErro... voltando")
             return
@@ -15,7 +15,7 @@ def execute(opcao: int) -> None:
 
     #Mostra um produto
     elif opcao == 2:
-        codigo = input("Digite o codigo do produto que deseja pesquisar: (0- voltar) ")
+        codigo = input("Digite o codigo do produto que deseja pesquisar: (0- voltar)\n")
         #voltar
         if codigo == "0":
             return
@@ -30,7 +30,7 @@ def execute(opcao: int) -> None:
             else:
                 tipo = 'documentário'
 
-        #imprime produto
+            #imprime produto
             print("Resultado: ")
             print(f"Nome: {produto['nome']}, Tipo: {tipo}, preço: R${produto['preco']}, Disponibilidade: {produto['disponibilidade']}")
         return
@@ -38,7 +38,7 @@ def execute(opcao: int) -> None:
     #cadastra um produto novo
     elif opcao == 3:
         #coletando os dados e tratando-os
-        cod = input("Digite o codigo do produto: (0- voltar) ")
+        cod = input("Digite o codigo do produto: (0- voltar)\n")
         if cod == "0":
             return
         nome = functions.strinput("Digite um nome para o produto: ")
@@ -58,7 +58,7 @@ def execute(opcao: int) -> None:
     #Atualizar um produto existente
     elif opcao == 4:
         #coletando os dados e tratamento de dados
-        cod = input("Digite o codigo do produto que deseja atualizar: (0- voltar) ")
+        cod = input("Digite o codigo do produto que deseja atualizar: (0- voltar)\n")
         if cod == "0":
             return
 
@@ -79,7 +79,7 @@ def execute(opcao: int) -> None:
     #Deletar produto
     else:
         #pegando codigo apra deletar
-        cod = input("Digite o codigo do produto que deseja excluir: (0- voltar) ")
+        cod = input("Digite o codigo do produto que deseja excluir: (0- voltar)\n")
         if cod == "0":
             return
         #deletando

@@ -49,5 +49,24 @@ def tabelaprodutos(produtos: dict):
   tabela = pd.DataFrame(data=dados, index=linhas, columns=colunas)
   print(tabela)
   return
+#cria tabela de compras
+def tabelacompras(compras: dict):
+  colunas = "Cliente Total Data".split(' ')
+  linhas = []
+  linha = 1
+  dados = []
+
+  if compras == {}:
+    return
+
+  for compra in compras.values():
+    #adiciona linha
+    linhas.append(linha)
+    linha += 1
+    #adiciona dados das compras
+    dados.append([compra['cliente'], round(compra['total'], 2), compra['created_at']])
     
-  
+  #cria tabela
+  tabela = pd.DataFrame(data=dados, index=linhas, columns=colunas)
+  print(tabela)
+  return

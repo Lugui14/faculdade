@@ -7,36 +7,43 @@ class ProductService:
 
     #Pega todos os produtos
     def getAll(self, opcao: int) -> dict or None:
+        #validando dados
         if opcao == None:
             return           
-        if opcao == -1:
+        if opcao == 6:
             return
         if opcao < 0 or opcao > 5:
             print("Opção invalida.")
             return
 
+        #todos os produtos
         if opcao == 0:
             nprodutos = self.repo.getAll()
+        #somente filmes
         elif opcao == 1:
             nprodutos = {}
             for produto in self.repo.getAll().values():
                 if produto['tipo'] == 2:
                     nprodutos[produto['codigo']] = produto
+        #somente series
         elif opcao == 2:
             nprodutos = {}
             for produto in self.repo.getAll().values():
                 if produto['tipo'] == 1:
                     nprodutos[produto['codigo']] = produto
+        #somente documentários
         elif opcao == 3:
             nprodutos = {}
             for produto in self.repo.getAll().values():
                 if produto['tipo'] == 3:
                     nprodutos[produto['codigo']] = produto
+        #somente disponíveis para venda
         elif opcao == 4:
             nprodutos = {}
             for produto in self.repo.getAll().values():
                 if produto['disponibilidade'] == True:
                     nprodutos[produto['codigo']] = produto
+        #somente indisponíveis para venda
         elif opcao == 5:
             nprodutos = {}
             for produto in self.repo.getAll().values():
@@ -48,7 +55,7 @@ class ProductService:
     #Busca um produto
     def getOne(self, codigo: str) -> dict or str:
         if codigo not in self.repo.getAll().keys():
-            print("Produto não cadastrado.")
+            print("\nProduto não cadastrado.")
             return
         return self.repo.getOne(codigo)
 
