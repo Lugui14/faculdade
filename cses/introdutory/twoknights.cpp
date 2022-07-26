@@ -4,12 +4,12 @@ using namespace std;
 
 int main()
 {
-  int n;
+  long long int n, i, j, k;
   cin >> n;
 
-  for(int i = 1; i <= n; i++) {
-   long long j = ((i*i) * ((i*i) -1))/2;
-   long long k = 4 * ((i-1) * (i-2));
+  for(i = 1; i <= n; i++) {
+   j = ((i*i) * ((i*i) -1))/2;
+   k = 4 * ((i-1) * (i-2));
    cout << j - k << endl;
   };
   return 0;
