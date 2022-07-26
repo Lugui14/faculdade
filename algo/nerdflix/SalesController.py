@@ -6,11 +6,6 @@ def execute(opcao: int):
   productService = ProductService()
   salesService = SalesService()
 
-  #relatorio de compras
-  if opcao == 0:
-    salesService.getAll()
-    return
-
   #adiciona nova compras
   if opcao == 1:
     #recupera o login do cliente
@@ -60,5 +55,12 @@ def execute(opcao: int):
     salesService.add(cliente, produtos)
     return
 
-
+  #relatorio de compras
+  if opcao == 2:
+    salesService.getAll()
+    return
   
+  #relatorio clientes
+  if  opcao == 3:
+    functions.tabelaclientes()
+    return

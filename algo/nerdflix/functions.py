@@ -1,4 +1,5 @@
 import pandas as pd
+from ClientsRepo import ClientsRepo
 
 #tratamento string
 def strinput(text: str) -> str or None:
@@ -65,6 +66,28 @@ def tabelacompras(compras: dict):
     linha += 1
     #adiciona dados das compras
     dados.append([compra['cliente'], round(compra['total'], 2), compra['created_at']])
+    
+  #cria tabela
+  tabela = pd.DataFrame(data=dados, index=linhas, columns=colunas)
+  print(tabela)
+  return
+
+def tabelaclientes():
+  clietsRepo = ClientsRepo
+  clientes = clientsRepo.getAll()
+
+  colunas = "Cliente Compras".split(' ')
+  linhas = []
+  linha = 1
+  dados = []
+
+  for cliente in clientes.keys():
+    #adiciona linha
+    linhas.append(linha)
+    linha += 1
+
+    #adiciona dados das compras
+    dados.append([cliente, clientes[cliente]])
     
   #cria tabela
   tabela = pd.DataFrame(data=dados, index=linhas, columns=colunas)

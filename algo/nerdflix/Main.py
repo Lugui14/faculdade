@@ -15,10 +15,15 @@ print("""\033[1;31m
 #looping principal do programa
 while True:
     #operação
-    print("\033[1;31m--------------------------------------------------------------------------\n")
-    operacao = input("\033[1;97mO que você quer fazer?\n0: Sair\n1: Gerenciar Compras,\n2: Gerenciar Produtos\n")
-    print("\x1b[2J")
-    print("\033[1;31m--------------------------------------------------------------------------\n")
+    operacao = input("""
+\033[1;31m--------------------------------------------------------------------------
+\033[1;97mO que você quer fazer?
+0: Sair
+1: Gerenciar Compras
+2: Gerenciar Produtos
+\033[1;31m--------------------------------------------------------------------------
+""")
+    print("\n" * 50)
     print("\033[1;97m")
 
     #validar digito
@@ -37,8 +42,17 @@ while True:
     #gerenciar compras
     if operacao == 1:
         while True:
-            opcao = input("\033[1;97m\n\nO que você quer fazer?\n0: Voltar\n1: Cadastrar Compra,\n2: Gerar Relatório\n\n\n")
-            print("\x1b[2J")
+            opcao = input("""
+\033[1;31m--------------------------------------------------------------------------
+\033[1;97mO que você quer fazer?
+0: Voltar
+1: Cadastrar Compra
+2: Gerar Relatório de Compras
+3: Gerar Relatório de Clientes
+\033[1;31m--------------------------------------------------------------------------
+""")
+            print("\033[1;97m")
+            print("\n" * 50)
 
             #validar digito
             if opcao.isnumeric():
@@ -47,7 +61,7 @@ while True:
                 continue
 
             #validar opcao
-            if opcao < 0 or opcao > 2:
+            if opcao < 0 or opcao > 3:
                 print('Operação Invalida.')
                 continue
             if opcao == 0:
@@ -59,8 +73,19 @@ while True:
     #gerenciar produtos:
     elif operacao == 2:
         while True:
-            opcao = input("\033[1;97m\n\nO que você quer fazer?\n0: Voltar\n1: Gerar Relatório,\n2: Mostrar um produto\n3: Cadastrar produto\n4: Atualizar produto\n5: Deletar Produto\n\n\n")
-            print("\x1b[2J")
+            opcao = input("""
+\033[1;31m--------------------------------------------------------------------------
+\033[1;97mO que você quer fazer?
+0: Voltar
+1: Gerar Relatório,
+2: Mostrar um produto
+3: Cadastrar produto
+4: Atualizar produto
+5: Deletar Produto
+\033[1;31m--------------------------------------------------------------------------
+""")
+            print("\033[1;97m")
+            print("\n" * 50)
 
             #validar digito
             if opcao.isnumeric():

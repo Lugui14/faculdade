@@ -1,5 +1,48 @@
 #lista de produtos
-produtos = {}
+produtos = {
+    "1": {
+      "codigo": "1",
+      "nome": "Ilha do Medo",
+      "tipo": 2,
+      "preco": 15.00,
+      "disponibilidade": True
+    },
+    "2": {
+      "codigo": "2",
+      "nome": "Ted 2",
+      "tipo": 2,
+      "preco": 10.00,
+      "disponibilidade": False
+    },
+    "3": {
+      "codigo": "3",
+      "nome": "Stranger Things",
+      "tipo": 1,
+      "preco": 18.00,
+      "disponibilidade": True
+    },
+    "4": {
+      "codigo": "4",
+      "nome": "Suits",
+      "tipo": 1,
+      "preco": 10.00,
+      "disponibilidade": False
+    },
+    "5": {
+      "codigo": "5",
+      "nome": "As Fitas de Poughkeepsie",
+      "tipo": 3,
+      "preco": 20.00,
+      "disponibilidade": True
+    },
+    "6": {
+      "codigo": "6",
+      "nome": "Take Your Pills",
+      "tipo": 3,
+      "preco": 12.00,
+      "disponibilidade": False
+    }
+  }
 
 #Repositorio de produtos
 class ProductRepo:
