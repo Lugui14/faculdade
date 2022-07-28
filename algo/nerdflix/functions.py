@@ -21,10 +21,14 @@ def floatinput(text: str) -> float or None:
   val = input(text)
   if val == '':
     return None
-  elif val.isfloat() == False:
-    print("\nERROR: Valor invalido. (igualado a None)")
-    return None
-  return float(val)
+  
+  try:
+    nval = float(val)
+  except:
+    print("ERRO: Valor invalido. (retornado None)")
+    nval = None
+
+  return nval
 #cria tabela com produtos
 def tabelaprodutos(produtos: dict):
   colunas = "Nome Tipo Preço Disp".split(' ')
