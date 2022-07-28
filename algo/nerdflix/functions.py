@@ -21,7 +21,7 @@ def floatinput(text: str) -> float or None:
   val = input(text)
   if val == '':
     return None
-  elif val.isnumeric() == False:
+  elif val.isfloat() == False:
     print("\nERROR: Valor invalido. (igualado a None)")
     return None
   return float(val)
