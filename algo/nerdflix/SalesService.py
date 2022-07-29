@@ -31,7 +31,7 @@ class SalesService:
 
     #relatorio da compra
     functions.tabelaprodutos(produtos)
-    print(f"TOTAL DA COMPRA: R${total:.2f}")
+    print(f"#\t\tTOTAL DA COMPRA: R${total:.2f}")
     return
     
   #relatório de compras

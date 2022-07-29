@@ -109,15 +109,18 @@ class ProductService:
                 return
             #formatar preco   
             novoPreco = round(preco, 2)
-        if vendivel != None:
-            if vendivel != 1 and vendivel != 2:
-                print("\nDigite um valor valido para disponibilidade de venda.")
-                return
-            #formatar disponibilidade
-            if vendivel == 1:
-                dispo = True
-            else:
-                dispo = False
+        #validar disponibilidade
+        if vendivel == None:
+            print("\nDigite um valor valido para disponibilidade de venda.")
+            return
+        if vendivel != 1 and vendivel != 2:
+            print("\nDigite um valor valido para disponibilidade de venda.")
+            return
+        #formatar disponibilidade
+        if vendivel == 1:
+            dispo = True
+        else:
+            dispo = False
 
         produto = self.repo.update(codigo, nome, tipo, preco, dispo)
         return produto

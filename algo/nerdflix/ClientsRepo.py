@@ -13,7 +13,7 @@ class ClientsRepo:
     if nomeCliente in clientes.keys():
       clientes[nomeCliente] += 1
       return
-    cliente[nomeCliente] = 0
+    clientes[nomeCliente] = 0
     clientes[nomeCliente] += 1
     return
     

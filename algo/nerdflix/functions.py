@@ -22,10 +22,12 @@ def floatinput(text: str) -> float or None:
   if val == '':
     return None
   
+  val = val.replace(',', '.')
+
   try:
     nval = float(val)
   except:
-    print("ERRO: Valor invalido. (retornado None)")
+    print("\nERRO: Valor invalido. (retornado None)")
     nval = None
 
   return nval
@@ -75,9 +77,9 @@ def tabelacompras(compras: dict):
   tabela = pd.DataFrame(data=dados, index=linhas, columns=colunas)
   print(tabela)
   return
-
+#cria tabela de clientes
 def tabelaclientes():
-  clietsRepo = ClientsRepo
+  clientsRepo = ClientsRepo
   clientes = clientsRepo.getAll()
 
   colunas = "Cliente Compras".split(' ')
