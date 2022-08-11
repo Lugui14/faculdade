@@ -2,6 +2,7 @@ import functions
 import ProductController
 import SalesController
 
+#função para gerenciar compras
 def compras():
     opcao = functions.intinput("""
 \033[1;31m--------------------------------------------------------------------------
@@ -26,6 +27,7 @@ def compras():
     #executar opcao
     SalesController.execute(opcao)
 
+#função para gerenciar produtos
 def produtos():
     opcao = functions.intinput("""
 \033[1;31m--------------------------------------------------------------------------
@@ -64,6 +66,7 @@ _   _ ______ _____  _____  ______ _      _______   __
 |_| \_|______|_|  \_\_____/|_|    |______|_____/_/ \_\                                                     
 """)
 
+#loop principal do programa
 while True:
     #operação
     operacao = functions.intinput("""
