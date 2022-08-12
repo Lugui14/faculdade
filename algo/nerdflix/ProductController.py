@@ -7,7 +7,7 @@ def execute(opcao: int or None) -> None:
 
     #Mostrar Lista de produtos
     if opcao == 1:
-        opcaoRelatorio = functions.intinput("\nEscolha uma opção:\n0- todos,\n1- somente filmes,\n2- somente séries\n3- somente documentários\n4- somente produtos a venda\n5- produtos indisponíveis.\n6- voltar\n")
+        opcaoRelatorio = functions.intinput("\nEscolha uma opção:\n0- todos\n1- somente filmes\n2- somente séries\n3- somente documentários\n4- somente produtos a venda\n5- produtos indisponíveis.\n6- voltar\n")
         if opcaoRelatorio == None:
             print("\nErro... voltando")
             return
