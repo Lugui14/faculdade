@@ -70,7 +70,7 @@ int menu2()
 
 //-------------------------------------------------------------------------------------------//
 
-//função para validar números inteiros
+//Função para validar números inteiros
 int inteiro()
 {
 
