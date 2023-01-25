@@ -12,6 +12,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
+#include <ctype.h>
 
 #define EXIT 10  // valor fixo para a opção que finaliza a aplicação
 
@@ -66,6 +68,33 @@ int menu2()
     return op;
 }
 
+//-------------------------------------------------------------------------------------------//
+
+//função para validar números inteiros
+int inteiro()
+{
+
+    //variável que vai receber o suposto numero
+    char numero[100];
+
+    //ponteiro para a 'string'
+    char *entrada = gets(numero);
+    fflush(stdin);
+
+    //looping para percorrer a string
+    for (int i = 0; i < strlen(entrada); i++) {
+        //verificação para ver se o caractere é um número decimal
+        if (isdigit(entrada[i])) {
+            //se for digito
+            continue;
+        } else {
+            //se não for decimal retorna NULL
+            return -5;
+        }
+    }
+
+    return atof(entrada);
+}
 //-------------------------------------------------------------------------------------------//
 
 //função criada para fazer uma busca recursiva de um item específico
@@ -134,18 +163,24 @@ void insert_recursividade(Item **raiz, char produto[50], int quantidade)
     return;
 }
 
-// Função utilizada para evitar erros na recursividade
+// Função utilizada para evitar erros na recursividades
 void insert(Item **raiz)
 {
     //declara variaveis
     char produto[50];
-    int quantidade = 0;
+    int quantidade;
 
     //pega os dados
     printf("\nDigite o nome do produto a ser inserido: ");
     scanf("%s", produto);
+    fflush(stdin);
     printf("\nDigite a quantidade do produto: ");
-    scanf("%d", &quantidade);
+    quantidade = inteiro();
+
+    while(quantidade == -5) {
+        printf("\nDigite a quantidade do produto em valor DECIMAL: ");
+        quantidade = inteiro();
+    }
 
     insert_recursividade(raiz, produto, quantidade);
     return;
@@ -217,10 +252,16 @@ void update(Item **raiz)
     int quantidade;
 
     //pega os dados
-    printf("\nDigite o nome do produto a ser inserido: ");
+    printf("\nDigite o nome do produto a ser atualizado: ");
     scanf("%s", produto);
+    fflush(stdin);
     printf("\nDigite nova quantidade: ");
-    scanf("%d", &quantidade);
+    quantidade = inteiro();
+
+    while(quantidade == -5) {
+        printf("\nDigite a quantidade do produto em valor DECIMAL: ");
+        quantidade = inteiro();
+    }
 
     update_recursividade(&(*raiz), produto, quantidade);
 
@@ -240,19 +281,32 @@ int count(Item **raiz)
     return 1 + count(&(*raiz)->esquerdo) + count(&(*raiz)->direito);
 }
 
-// Listar todos os itens da lista de compras em ordem alfabética;
-void list(Item **raiz)
+// Lista todos os itens usando recursão
+void list_recursividade(Item **raiz)
 {
     if (*raiz == NULL) {
         return;
     }
-    list(&(*raiz)->esquerdo);
+    list_recursividade(&(*raiz)->esquerdo);
 
     if((*raiz)->produto != -1) {
         printf("\nProduto: %s - Quantidade: %d", (*raiz)->produto, (*raiz)->quantidade);
     }
 
-    list(&(*raiz)->direito);
+    list_recursividade(&(*raiz)->direito);
+}
+
+// Se a arvore estiver vazia printa, senao chama a recursão pra printar
+void list(Item **raiz)
+{
+
+    if(*raiz == NULL) {
+        printf("\n*Essa lista de compras está vazia, tente adicionar itens primeiro.*\n");
+        return;
+    }
+
+    list_recursividade(&(*raiz));
+    return;
 }
 
 //-------------------------------------------------------------------------------------------//
@@ -447,6 +501,9 @@ int main()
     int opcao2;
     Item *raizA = NULL;
     Item *raizB = NULL;
+
+    //permite o uso de acentuação
+    setlocale(LC_ALL, "");
 
     /*
     insert_recursividade(&raizA, "azeite", 1);
