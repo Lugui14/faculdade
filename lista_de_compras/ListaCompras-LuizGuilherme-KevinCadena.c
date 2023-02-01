@@ -34,6 +34,34 @@ typedef struct itemEncadeado {
 
 //-------------------------------------------------------------------------------------------//
 
+//Função para validar números inteiros
+int inteiro()
+{
+
+    //variável que vai receber o suposto numero
+    char entrada[100];
+
+    //ponteiro para a 'string'
+    gets(entrada);
+    fflush(stdin);
+
+    //looping para percorrer a string
+    for (int i = 0; i < strlen(entrada); i++) {
+        //verificação para ver se o caractere é um número decimal
+        if (isdigit(entrada[i])) {
+            //se for digito
+            continue;
+        } else {
+            //se não for decimal retorna NULL
+            return -5;
+        }
+    }
+
+    return atof(entrada);
+}
+
+//-------------------------------------------------------------------------------------------//
+
 // Apresenta o primeiro menu da aplicação e retorna a opção selecionada
 int menu1()
 {
@@ -46,7 +74,11 @@ int menu1()
 
     printf("[%d] - Sair do programa", EXIT);
     printf("\nDigite a opcao:  ");
-    scanf("%d",&op);
+
+    //substituí o scanf para evitar erros no programa
+    op = inteiro();
+
+    //scanf("%d",&op);
     return op;
 }
 
@@ -64,37 +96,14 @@ int menu2()
 
     printf("[%d] - Retornar para o menu principal",EXIT);
     printf("\nDigite a opcao:  ");
-    scanf("%d",&op);
+
+    //substituí o scanf para evitar erros no programa
+    op = inteiro();
+
+    //scanf("%d",&op);
     return op;
 }
 
-//-------------------------------------------------------------------------------------------//
-
-//Função para validar números inteiros
-int inteiro()
-{
-
-    //variável que vai receber o suposto numero
-    char numero[100];
-
-    //ponteiro para a 'string'
-    char *entrada = gets(numero);
-    fflush(stdin);
-
-    //looping para percorrer a string
-    for (int i = 0; i < strlen(entrada); i++) {
-        //verificação para ver se o caractere é um número decimal
-        if (isdigit(entrada[i])) {
-            //se for digito
-            continue;
-        } else {
-            //se não for decimal retorna NULL
-            return -5;
-        }
-    }
-
-    return atof(entrada);
-}
 //-------------------------------------------------------------------------------------------//
 
 //função criada para fazer uma busca recursiva de um item específico
@@ -172,7 +181,7 @@ void insert(Item **raiz)
 
     //pega os dados
     printf("\nDigite o nome do produto a ser inserido: ");
-    scanf("%s", produto);
+    gets(produto);
     fflush(stdin);
     printf("\nDigite a quantidade do produto: ");
     quantidade = inteiro();
@@ -197,7 +206,7 @@ void query(Item **raiz)
 
     //pega os dados
     printf("\nDigite o nome do produto que quer procurar: ");
-    scanf("%s", produto);
+    gets(produto);
 
     //realiza a busca
     Item *item = search(raiz, produto);
@@ -253,7 +262,7 @@ void update(Item **raiz)
 
     //pega os dados
     printf("\nDigite o nome do produto a ser atualizado: ");
-    scanf("%s", produto);
+    gets(produto);
     fflush(stdin);
     printf("\nDigite nova quantidade: ");
     quantidade = inteiro();
@@ -357,6 +366,7 @@ void delete_recursividade(Item **raiz, char produto[50])
         } else {
             Item *aux = find_min(&(*raiz)->direito);
             strcpy((*raiz)->produto,aux->produto);
+            (*raiz)->quantidade = aux->quantidade;
             delete_recursividade(&(*raiz)->direito, aux->produto);
         }
     }
@@ -372,7 +382,7 @@ void delete(Item **raiz)
 
     //coleta dados
     printf("\nDigite o nome do produto a ser deletado: ");
-    scanf("%s", produto);
+    gets(produto);
 
     delete_recursividade(raiz, produto);
     return;
