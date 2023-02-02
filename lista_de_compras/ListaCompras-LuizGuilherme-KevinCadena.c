@@ -421,22 +421,24 @@ void insert_encadeada(ItemEncadeado *pai, ItemEncadeado **raiz, char produto[50]
 
 }
 
-//função para auxiliar a intersecção, criando arrays com os componentes
-void fill_array(Item **raiz, char aux[][50], int *i)
+//função para adicionar itens duplicados na lista encadeada
+void intersect_encadeada(ItemEncadeado **lista, Item **raiz, Item **raizB)
 {
-
-    //se a raiz passada for nula então executa a recursão
-    if ((*raiz) == NULL) {
+    //termina a recursao
+    if (*raiz == NULL) {
         return;
     }
 
-    //metodor recursivo para percorrer a arvore
-    fill_array(&(*raiz)->esquerdo, aux, i);
-    strcpy(aux[*i], (*raiz)->produto);
-    //utiliza-se o ponteiro do inteiro para continuar a somatoria mesmo com a saida da função
-    (*i)++;
-    fill_array(&(*raiz)->direito, aux, i);
+    //executa a recursividade
+    intersect_encadeada(&(*lista), &(*raiz)->esquerdo, &(*raizB));
 
+    //se a item da arvore A tiver na arvore B ele insere na lista encadeada
+    if(search(&(*raizB), (*raiz)->produto) != NULL) {
+        insert_encadeada(NULL, &(*lista), (*raiz)->produto);
+    }
+
+    //recursao
+    intersect_encadeada(&(*lista), &(*raiz)->direito, &(*raizB));
 }
 
 //imprime a lista encadeada
@@ -467,39 +469,17 @@ void intersect(Item **raizA, Item **raizB)
     //inicializa a lista encadeada
     ItemEncadeado *lista = NULL;
 
-    //se uma das listas for nula não é possivel fazer a intersecção
-    if (raizA == NULL || raizB == NULL) {
-        printf("\n A uma das listas de compra está vazia.");
-        return;
-    }
+    //chama função recursiva para inserir itens na lista encadeada
+    intersect_encadeada(&lista, &(*raizA), &(*raizB));
 
-    //faz a contagem dos itens das arvores
-    int sizeA = count(raizA);
-    int sizeB = count(raizB);
-
-    //cria um array para cada arvore para facilitar a intersecção
-    char auxA[sizeA][50];
-    char auxB[sizeB][50];
-
-    //preenche os arrays com os itens da arvore
-    int i = 0;
-    fill_array(&(*raizA), auxA, &i);
-    i = 0;
-    fill_array(&(*raizB), auxB, &i);
-
-    //insere os itens que forem duplicados na lista encadeada
-    for(int countA = 0; countA < sizeA; countA++) {
-        for(int countB = 0; countB < sizeB; countB++) {
-            if(strcmp(auxA[countA], auxB[countB]) == 0) {
-                insert_encadeada(NULL, &lista, auxA[countA]);
-            }
-        }
-    }
-
-    //printa os itens duplicados
+    //printa duplicados
     printf("\nDuplicados nas listas\n");
     print_encadeada(&lista);
+
+    //exclui a lista encadeada formada
     kill_list(&lista);
+
+    return;
 }
 
 //-------------------------------------------------------------------------------------------//
